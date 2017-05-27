@@ -35,7 +35,10 @@ namespace Mapster
                         filename += "-" + num;
                     _registeredFilename[key]++;
                 }
-                using (var injector = new DebugInfoInjectorEx(Path.Combine(sourceCodePath, filename + ".cs")))
+                var path = Path.Combine(sourceCodePath, filename + ".cs");
+                if (File.Exists(path))
+                    File.Delete(path);
+                using (var injector = new DebugInfoInjectorEx(path))
                 {
                     return injector.Compile(lambda, _assemblyName);
                 }
