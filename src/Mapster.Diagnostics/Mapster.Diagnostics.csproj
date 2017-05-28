@@ -12,7 +12,7 @@
     <SignAssembly>True</SignAssembly>
     <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
     <AssemblyOriginatorKeyFile>Mapster.Diagnostics.snk</AssemblyOriginatorKeyFile>
-    <Version>1.0.1</Version>
+    <Version>1.0.2</Version>
   </PropertyGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'net40' ">
@@ -28,7 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="ExpressionDebugger" Version="1.0.2" />
+    <PackageReference Include="ExpressionDebugger" Version="1.0.5" />
     <PackageReference Include="Mapster" Version="3.0.2" />
   </ItemGroup>
 

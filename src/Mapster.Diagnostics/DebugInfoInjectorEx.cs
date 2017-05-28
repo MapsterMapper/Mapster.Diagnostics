@@ -1,5 +1,6 @@
 ﻿using ExpressionDebugger;
 using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq.Expressions;
 using System.Reflection;
@@ -12,6 +13,18 @@ namespace Mapster.Diagnostics
         public DebugInfoInjectorEx(string filename): base (filename) { }
 
         public DebugInfoInjectorEx(TextWriter writer): base(writer) { }
+
+        public override Expression Inject(Expression node)
+        {
+            var lambda = (LambdaExpression)base.Inject(node);
+            var breakHelper = Expression.IfThen(
+                Expression.Field(null, typeof(MapsterDebugger).GetField(nameof(MapsterDebugger.BreakOnEnterAdaptMethod))),
+                    Expression.Call(typeof(Debugger).GetMethod(nameof(Debugger.Break))));
+            lambda = Expression.Lambda(
+                Expression.Block(breakHelper, lambda.Body),
+                lambda.Parameters);
+            return lambda;
+        }
 
         protected override Expression VisitConstant(ConstantExpression node)
         {

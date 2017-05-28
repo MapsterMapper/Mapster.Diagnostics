@@ -36,8 +36,6 @@ namespace Mapster
                     _registeredFilename[key]++;
                 }
                 var path = Path.Combine(sourceCodePath, filename + ".cs");
-                if (File.Exists(path))
-                    File.Delete(path);
                 using (var injector = new DebugInfoInjectorEx(path))
                 {
                     return injector.Compile(lambda, _assemblyName);
